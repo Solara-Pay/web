@@ -1,18 +1,22 @@
+import React from "react";
+import { Outlet } from "react-router-dom";
 import Sidebar from "./sidebar";
-import Footer from "./footer";
-import Navbar from "./Navbar";
-const Layout = ({ children }) => {
+import Header from "./header";
+import Footer from "./smfooter";
+
+const Layout = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* <Navbar className={"w-full"} /> */}
-
-      <div className="flex flex-1 min-h-screen">
-        <Sidebar className="w-64" />
-
-        <main className="flex-1 p-4">{children}</main>
+    <div className="min-h-screen bg-gray-700 flex flex-col">
+      <Header />
+      <div className="flex-grow flex">
+        <Sidebar />
+        <div className="flex-grow md:ml-64">
+          <main className="min-h-[calc(100vh-64px)] p-4 overflow-y-auto mt-16">
+            <Outlet />
+          </main>
+          <Footer />
+        </div>
       </div>
-
-      <Footer />
     </div>
   );
 };
