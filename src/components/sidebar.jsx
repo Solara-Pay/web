@@ -6,6 +6,9 @@ import {
   ArrowRightLeft,
   Menu,
   X,
+  User,
+  Wallet,
+  Code,
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -18,8 +21,11 @@ const Sidebar = () => {
 
   const navItems = [
     { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+    { href: "/account", icon: User, label: "Account" },
+    { href: "/wallet", icon: Wallet, label: "Wallet" },
     { href: "/details", icon: ListCollapse, label: "Details" },
     { href: "/transactions", icon: ArrowRightLeft, label: "Transactions" },
+    { href: "/developer", icon: Code, label: "Developer" },
   ];
 
   return (

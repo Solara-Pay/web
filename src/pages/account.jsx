@@ -46,18 +46,59 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function createData(id, amount, fee, status, date) {
-  return { id, amount, fee, status, date };
+function createData(userId, email, publicKey, balance, createdAt, updatedAt) {
+  return { userId, email, publicKey, balance, createdAt, updatedAt };
 }
 
-// Dummy data for the new fields
 const rows = [
-  createData("TXN001", "100.00", "2.50", "Completed", "2024-09-17T11:55:19Z"),
-  createData("TXN002", "250.00", "5.00", "Pending", "2024-09-18T12:34:19Z"),
-  createData("TXN003", "50.00", "1.00", "Failed", "2024-09-19T10:20:30Z"),
-  createData("TXN004", "450.00", "10.00", "Completed", "2024-09-20T14:45:50Z"),
-  createData("TXN005", "125.00", "3.00", "Pending", "2024-09-21T09:05:25Z"),
-  createData("TXN006", "75.00", "1.50", "Completed", "2024-09-22T11:22:30Z"),
+  createData(
+    "1",
+    "user@example.com",
+    "4y8sb3GkgNYFmX3V9RF8nfCPHTJS1VZu4RCHUKS9SarW",
+    "17",
+    "2024-09-17T11:55:19.000000Z",
+    "2024-09-18T18:48:42.000000Z"
+  ),
+  createData(
+    "2",
+    "jane.doe@example.com",
+    "5x9hGg2Bf3kYpM7R6Hf8fVbPQyS2Y1S9C9dHKL6TkP4L",
+    "25",
+    "2024-09-18T10:20:30.000000Z",
+    "2024-09-19T14:12:45.000000Z"
+  ),
+  createData(
+    "3",
+    "john.smith@example.com",
+    "2b7TcH7Kj4fZtD9W8Rf2tTyX3hS6N8J5K9h9N4LQmJ7K",
+    "45",
+    "2024-09-19T08:15:50.000000Z",
+    "2024-09-20T16:30:00.000000Z"
+  ),
+  createData(
+    "4",
+    "alice.wonder@example.com",
+    "1y8Fb3Kf4gQXnJ5D8Fv6vYhT8pB9G4R3C9c8V1JkT6N7",
+    "32",
+    "2024-09-20T12:00:00.000000Z",
+    "2024-09-21T17:45:10.000000Z"
+  ),
+  createData(
+    "5",
+    "bob.brown@example.com",
+    "6u9Gh3Bf2vZPzR6Q9Vf5dVcPRyF8J1M6E3a9B5PqW4R8",
+    "10",
+    "2024-09-21T09:05:25.000000Z",
+    "2024-09-22T11:22:30.000000Z"
+  ),
+  createData(
+    "6",
+    "charlie.green@example.com",
+    "3f4Yg7Dg5pGfQ8J9L3Kj6S9V1YhC8Q2D6R8B5F1J3L4P",
+    "78",
+    "2024-09-22T14:55:45.000000Z",
+    "2024-09-23T09:11:15.000000Z"
+  ),
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -82,16 +123,17 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: "id", label: "ID" },
-  { id: "amount", label: "Amount" },
-  { id: "fee", label: "Fee" },
-  { id: "status", label: "Status" },
-  { id: "date", label: "Date" },
+  { id: "userId", label: "User ID" },
+  { id: "email", label: "Email" },
+  { id: "publicKey", label: "Public Key" },
+  { id: "balance", label: "Balance" },
+  { id: "createdAt", label: "Created At" },
+  { id: "updatedAt", label: "Updated At" },
 ];
 
-export default function EnhancedTransactionsTable() {
+export default function Account() {
   const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("id");
+  const [orderBy, setOrderBy] = useState("userId");
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -114,7 +156,7 @@ export default function EnhancedTransactionsTable() {
           gutterBottom
           sx={{ color: "text.primary", mb: 3 }}
         >
-          Transactions
+          Accounts
         </Typography>
         <StyledTableContainer component={Paper}>
           <Table stickyHeader aria-label="transactions table">
@@ -146,13 +188,27 @@ export default function EnhancedTransactionsTable() {
             </TableHead>
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy)).map((row) => (
-                <TableRow key={row.id} hover>
-                  <StyledTableCell>{row.id}</StyledTableCell>
-                  <StyledTableCell>{row.amount}</StyledTableCell>
-                  <StyledTableCell>{row.fee}</StyledTableCell>
-                  <StyledTableCell>{row.status}</StyledTableCell>
+                <TableRow key={row.userId} hover>
+                  <StyledTableCell>{row.userId}</StyledTableCell>
+                  <StyledTableCell>{row.email}</StyledTableCell>
                   <StyledTableCell>
-                    {new Date(row.date).toLocaleString()}
+                    <Box
+                      sx={{
+                        maxWidth: 150,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {row.publicKey}
+                    </Box>
+                  </StyledTableCell>
+                  <StyledTableCell>{row.balance}</StyledTableCell>
+                  <StyledTableCell>
+                    {new Date(row.createdAt).toLocaleString()}
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    {new Date(row.updatedAt).toLocaleString()}
                   </StyledTableCell>
                 </TableRow>
               ))}

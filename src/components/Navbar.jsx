@@ -59,7 +59,11 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <a href="#" className="flex-shrink-0">
-              <span className="text-2xl font-bold text-white">SOLARA</span>
+              <img
+                src="/assets/images/logo/logo.svg"
+                alt="Logo"
+                className="w-10 h-13 p-2 sm:w-20 md:w-15 lg:w-18"
+              />
             </a>
           </div>
           <div className="hidden md:block">

@@ -7,9 +7,11 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 bg-gray-800 shadow-md z-50 h-16">
       <div className="max-w-full px-4 sm:px-6 lg:px-8 flex justify-between items-center h-full">
         <div className="flex">
-          <h1 className="font-bold text-3xl text-indigo-300 tracking-wide">
-            SOLARA
-          </h1>
+          <img
+            src="/assets/images/logo/logo.svg"
+            alt="Logo"
+            className="w-10 h-13 p-2 sm:w-20 md:w-15 lg:w-18"
+          />
         </div>
 
         <div className="flex items-center space-x-6">
