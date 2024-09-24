@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Mail, Lock, Loader2, Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SigninForm = () => {
+
   // State variables to hold user input
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission
@@ -24,7 +26,7 @@ const SigninForm = () => {
     try {
       // Fetch request to submit user data to the backend
       setLoading(true);
-      const response = await fetch("/api/signin", {
+      const response = await fetch('https://script.teendev.dev/solara/api/login', {
         // Replace with actual endpoint
         method: "POST", // HTTP method
         headers: {
@@ -38,7 +40,10 @@ const SigninForm = () => {
       }
       setLoading(false);
       const result = await response.json(); // Parse JSON response
-      console.log("Success:", result); // Handle success (e.g., show a message)
+      const accessToken  = result.accessToken;
+        localStorage.setItem('accessToken', accessToken);
+        //const accessToken = localStorage.getItem('accessToken');
+      navigate('/dashboard');
 
       // Optionally redirect or show a success message here
     } catch (error) {

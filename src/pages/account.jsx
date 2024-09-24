@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -12,6 +12,8 @@ import {
   Box,
   ThemeProvider,
   createTheme,
+  CircularProgress,
+  Alert,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -46,61 +48,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function createData(userId, email, publicKey, balance, createdAt, updatedAt) {
-  return { userId, email, publicKey, balance, createdAt, updatedAt };
-}
-
-const rows = [
-  createData(
-    "1",
-    "user@example.com",
-    "4y8sb3GkgNYFmX3V9RF8nfCPHTJS1VZu4RCHUKS9SarW",
-    "17",
-    "2024-09-17T11:55:19.000000Z",
-    "2024-09-18T18:48:42.000000Z"
-  ),
-  createData(
-    "2",
-    "jane.doe@example.com",
-    "5x9hGg2Bf3kYpM7R6Hf8fVbPQyS2Y1S9C9dHKL6TkP4L",
-    "25",
-    "2024-09-18T10:20:30.000000Z",
-    "2024-09-19T14:12:45.000000Z"
-  ),
-  createData(
-    "3",
-    "john.smith@example.com",
-    "2b7TcH7Kj4fZtD9W8Rf2tTyX3hS6N8J5K9h9N4LQmJ7K",
-    "45",
-    "2024-09-19T08:15:50.000000Z",
-    "2024-09-20T16:30:00.000000Z"
-  ),
-  createData(
-    "4",
-    "alice.wonder@example.com",
-    "1y8Fb3Kf4gQXnJ5D8Fv6vYhT8pB9G4R3C9c8V1JkT6N7",
-    "32",
-    "2024-09-20T12:00:00.000000Z",
-    "2024-09-21T17:45:10.000000Z"
-  ),
-  createData(
-    "5",
-    "bob.brown@example.com",
-    "6u9Gh3Bf2vZPzR6Q9Vf5dVcPRyF8J1M6E3a9B5PqW4R8",
-    "10",
-    "2024-09-21T09:05:25.000000Z",
-    "2024-09-22T11:22:30.000000Z"
-  ),
-  createData(
-    "6",
-    "charlie.green@example.com",
-    "3f4Yg7Dg5pGfQ8J9L3Kj6S9V1YhC8Q2D6R8B5F1J3L4P",
-    "78",
-    "2024-09-22T14:55:45.000000Z",
-    "2024-09-23T09:11:15.000000Z"
-  ),
-];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) return -1;
   if (b[orderBy] > a[orderBy]) return 1;
@@ -128,18 +75,74 @@ const headCells = [
   { id: "publicKey", label: "Public Key" },
   { id: "balance", label: "Balance" },
   { id: "createdAt", label: "Created At" },
-  { id: "updatedAt", label: "Updated At" },
+//   { id: "updatedAt", label: "Updated At" },
 ];
 
-export default function Account() {
+const Account = () => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("userId");
+  const [accounts, setAccounts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
+      const response = await fetch(
+        "https://script.teendev.dev/solara/api/accounts/all",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      setAccounts(result);
+      //console.log(result);
+      setLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
+
+  if (loading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", p: 3 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ p: 3 }}>
+        <Alert severity="error">{error}</Alert>
+      </Box>
+    );
+  }
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -159,7 +162,7 @@ export default function Account() {
           Accounts
         </Typography>
         <StyledTableContainer component={Paper}>
-          <Table stickyHeader aria-label="transactions table">
+          <Table stickyHeader aria-label="accounts table">
             <TableHead>
               <TableRow>
                 {headCells.map((headCell) => (
@@ -187,35 +190,36 @@ export default function Account() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy)).map((row) => (
-                <TableRow key={row.userId} hover>
-                  <StyledTableCell>{row.userId}</StyledTableCell>
-                  <StyledTableCell>{row.email}</StyledTableCell>
-                  <StyledTableCell>
-                    <Box
-                      sx={{
-                        maxWidth: 150,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {row.publicKey}
-                    </Box>
-                  </StyledTableCell>
-                  <StyledTableCell>{row.balance}</StyledTableCell>
-                  <StyledTableCell>
-                    {new Date(row.createdAt).toLocaleString()}
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    {new Date(row.updatedAt).toLocaleString()}
-                  </StyledTableCell>
-                </TableRow>
-              ))}
+              {stableSort(accounts, getComparator(order, orderBy)).map(
+                (row) => (
+                  <TableRow key={row} hover>
+                    <StyledTableCell>{row.user_id}</StyledTableCell>
+                    <StyledTableCell>{row.email}</StyledTableCell>
+                    <StyledTableCell>
+                      <Box
+                        sx={{
+                          maxWidth: 450,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {row.publickey}
+                      </Box>
+                    </StyledTableCell>
+                    <StyledTableCell>{row.balance}</StyledTableCell>
+                    <StyledTableCell>
+                      {new Date(row.created_at).toLocaleString()}
+                    </StyledTableCell>
+                  </TableRow>
+                )
+              )}
             </TableBody>
           </Table>
         </StyledTableContainer>
       </Box>
     </ThemeProvider>
   );
-}
+};
+
+export default Account;

@@ -21,11 +21,11 @@ const Sidebar = () => {
 
   const navItems = [
     { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-    { href: "/account", icon: User, label: "Account" },
-    { href: "/wallet", icon: Wallet, label: "Wallet" },
-    { href: "/details", icon: ListCollapse, label: "Details" },
+    { href: "/account", icon: User, label: "Customers" },
+    { href: "/wallet", icon: Wallet, label: "My Wallet" },
     { href: "/transactions", icon: ArrowRightLeft, label: "Transactions" },
-    { href: "/developer", icon: Code, label: "Developer" },
+    { href: "/details", icon: ListCollapse, label: "Account Details" },
+    { href: "/developer", icon: Code, label: "Developer Tools" },
   ];
 
   return (

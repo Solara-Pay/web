@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -12,9 +12,13 @@ import {
   Box,
   ThemeProvider,
   createTheme,
+  Alert,
+  CircularProgress
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
+const accessToken = localStorage.getItem('accessToken');
+// console.log(accessToken);
 // Create a dark theme
 const darkTheme = createTheme({
   palette: {
@@ -46,19 +50,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function createData(id, amount, fee, status, date) {
-  return { id, amount, fee, status, date };
+function createData(id, amount, fee, signature, status, date) {
+  return { id, amount, fee, signature, status, date };
 }
 
-// Dummy data for the new fields
-const rows = [
-  createData("TXN001", "100.00", "2.50", "Completed", "2024-09-17T11:55:19Z"),
-  createData("TXN002", "250.00", "5.00", "Pending", "2024-09-18T12:34:19Z"),
-  createData("TXN003", "50.00", "1.00", "Failed", "2024-09-19T10:20:30Z"),
-  createData("TXN004", "450.00", "10.00", "Completed", "2024-09-20T14:45:50Z"),
-  createData("TXN005", "125.00", "3.00", "Pending", "2024-09-21T09:05:25Z"),
-  createData("TXN006", "75.00", "1.50", "Completed", "2024-09-22T11:22:30Z"),
-];
+
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) return -1;
@@ -85,6 +81,7 @@ const headCells = [
   { id: "id", label: "ID" },
   { id: "amount", label: "Amount" },
   { id: "fee", label: "Fee" },
+  { id: "signature", label: "Signature"},
   { id: "status", label: "Status" },
   { id: "date", label: "Date" },
 ];
@@ -92,6 +89,87 @@ const headCells = [
 export default function EnhancedTransactionsTable() {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("id");
+  const [transactions, setTransactions] = useState(null)
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null)
+
+  const fetchData = async () => {
+    try {
+      const accessToken = localStorage.getItem("accessToken");
+
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
+      const response = await fetch(
+        "https://script.teendev.dev/solara/api/transactions",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      setTransactions(result.data);
+      console.log(transactions);
+      setLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  //Table Data
+  const rows = Array.isArray(transactions)
+  ? transactions.map((item) => {
+    // Parse the `info` field
+    let info;
+    try {
+      info = JSON.parse(item.info);
+    } catch (e) {
+      info = {};  // Default to an empty object if parsing fails
+    }
+
+    return createData(
+      item.id || "N/A",                         // Default to "N/A" if 'id' is missing
+      item.amount || "0.00",                    // Default to "0.00" if 'amount' is missing
+      info?.fee ?? "0.00",                      // Default to "0.00" if 'info.fee' is missing
+      info?.signatures,
+      item.remark || "Unknown",                 // Default to "Unknown" if 'remark' is missing
+      item.created_at || "Unknown date"         // Default to "Unknown date" if 'created_at' is missing
+    );
+  })
+  : []; // Default to an empty array if transactions is not an array
+
+
+
+
+  if (loading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", p: 3 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ p: 3 }}>
+        <Alert severity="error">{error}</Alert>
+      </Box>
+    );
+  }
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -150,6 +228,7 @@ export default function EnhancedTransactionsTable() {
                   <StyledTableCell>{row.id}</StyledTableCell>
                   <StyledTableCell>{row.amount}</StyledTableCell>
                   <StyledTableCell>{row.fee}</StyledTableCell>
+                  <StyledTableCell>{row.signature}</StyledTableCell>
                   <StyledTableCell>{row.status}</StyledTableCell>
                   <StyledTableCell>
                     {new Date(row.date).toLocaleString()}

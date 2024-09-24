@@ -2,20 +2,7 @@ import React, { useEffect, useState } from "react"; // Import useEffect and useS
 import { toast, ToastContainer } from "react-toastify"; // Import toast and ToastContainer
 import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 import UserDetailsPage from "../components/userdetails";
-
-// Dummy data
-const dummyData = {
-  name: "John Doe",
-  email: "john@example.com",
-  username: "johndoe",
-  country: "United States",
-  wallet_address_balance: "1000 ETH",
-  wallet_address: "0x1234...5678",
-  onsite_wallet_balance: "500 USD",
-  onsite_wallet_address: "0xabcd...efgh",
-  api_key: "sk_test_1234567890",
-  webhook: "https://example.com/webhook",
-};
+import { Box, CircularProgress } from "@mui/material";
 
 const Details = () => {
   const [userData, setUserData] = useState(null); // State to hold user data
@@ -25,14 +12,22 @@ const Details = () => {
     const signal = controller.signal; // Get the signal
 
     const fetchUserData = async () => {
+        const accessToken = localStorage.getItem("accessToken"); // Get token from localStorage
       try {
         setLoading(true);
-        const response = await fetch("api_endpoint", { signal }); // Replace with actual API endpoint
+        const response = await fetch("https://script.teendev.dev/solara/api/details", {
+            method: "GET", // GET request
+            headers: {
+              Authorization: `Bearer ${accessToken}`, // Add Bearer token to headers
+              "Content-Type": "application/json",
+            },
+         }); // Replace with actual API endpoint
         if (!response.ok) {
           throw new Error("Network response was not ok"); // Throw an error for non-200 responses
         }
         setLoading(false);
         const data = await response.json();
+        //console.log(data);
         setUserData(data); // Set the fetched data to state
       } catch (error) {
         setLoading(false);
@@ -45,18 +40,38 @@ const Details = () => {
       }
     };
 
-    // fetchUserData(); uncomment this to call the function
+    fetchUserData(); //uncomment this to call the function
     // Call the fetch function when the component mounts
-
     // Cleanup function
     return () => {
       controller.abort(); // Abort the fetch request when unmounted
     };
   }, []);
 
+  console.log(userData);
+  // Dummy data
+  const dummyData = {
+    name: userData?.name || '', // Default to empty string if undefined
+    email: userData?.email || '',
+    username: userData?.username || '',
+    country: userData?.country || '',
+    wallet_address_balance: typeof userData?.wallet_address_balance === 'object'
+    ? 0
+    : userData?.wallet_address_balance || 0, // Default to 0 if undefined
+    wallet_address: userData?.wallet_address || '',
+    onsite_wallet_balance: userData?.onsite_wallet_balance || 0,
+    onsite_wallet_address: userData?.onsite_wallet_address || '',
+    api_key: userData?.api_key || '',
+    webhook: userData?.webhook || ''
+  };
+
   // Render a loading message while fetching data
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", p: 3 }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (

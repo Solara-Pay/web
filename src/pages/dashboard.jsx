@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   BarChart,
   Bar,
@@ -9,19 +9,71 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-
-// Sample data for the chart, representing revenue and transactions for each month
-const data = [
-  { name: "Jan", revenue: 4000, transactions: 2400 },
-  { name: "Feb", revenue: 3000, transactions: 1398 },
-  { name: "Mar", revenue: 2000, transactions: 9800 },
-  { name: "Apr", revenue: 2780, transactions: 3908 },
-  { name: "May", revenue: 1890, transactions: 4800 },
-  { name: "Jun", revenue: 2390, transactions: 3800 },
-];
+import { toast, ToastContainer } from "react-toastify";
+import { Box, CircularProgress } from "@mui/material";
 
 // Dashboard component to display the overall statistics
 const Dashboard = () => {
+  const [data, setData] = useState(null); // State for data
+  const [loading, setLoading] = useState(true); // State for loading
+  const [error, setError] = useState(null); // State for errors
+
+  // Fetch user data when the component mounts
+  useEffect(() => {
+    const controller = new AbortController(); // Create AbortController to cancel request if unmounted
+
+    const fetchUserData = async () => {
+      const accessToken = localStorage.getItem("accessToken"); // Get token from localStorage
+      try {
+        setLoading(true);
+        const response = await fetch(
+          "https://script.teendev.dev/solara/api/details",
+          {
+            method: "GET", // GET request
+            headers: {
+              Authorization: `Bearer ${accessToken}`, // Add Bearer token to headers
+              "Content-Type": "application/json",
+            },
+            // signal: controller.signal, // Attach the abort signal
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok"); // Throw an error for non-200 responses
+        }
+
+        const result = await response.json();
+        setData(result); // Set the fetched data to state
+        //console.log(result)
+        setLoading(false);
+      } catch (error) {
+        if (error.name === "AbortError") {
+          console.log("Fetch aborted"); // Handle fetch abort
+        } else {
+          setError("Error fetching data: " + error.message);
+          toast.error("Error fetching user data: " + error.message); // Toast the error message
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchUserData(); // Call the fetch function
+
+    // Cleanup function
+    return () => {
+      controller.abort(); // Abort the fetch request when unmounted
+    };
+  }, []);
+
+  if (loading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", p: 3 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+  if (error) return <div>Error: {error}</div>; // Show error state
+
   return (
     <div className="p-6 bg-gray-800 min-h-screen">
       <h1 className="mb-6 text-gray-200 text-3xl font-semibold">Dashboard</h1>
@@ -29,15 +81,15 @@ const Dashboard = () => {
       {/* Statistics cards for displaying key metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         {[
-          { title: "Total Revenue", value: "$24,000", color: "text-green-400" },
+          { title: "Total Revenue", value: data?.transactionsum, color: "text-green-400" },
           {
             title: "Total Transactions",
-            value: "1,200",
+            value: data?.transactioncount,
             color: "text-blue-400",
           },
           {
-            title: "Pending Transactions",
-            value: "50",
+            title: "Pending Customers",
+            value: data?.customers,
             color: "text-yellow-400",
           },
         ].map((card, index) => (
@@ -91,6 +143,7 @@ const Dashboard = () => {
           </BarChart>
         </ResponsiveContainer>
       </div>
+     <ToastContainer/>
     </div>
   );
 };
