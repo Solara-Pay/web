@@ -88,7 +88,7 @@ const Dashboard = () => {
             color: "text-blue-400",
           },
           {
-            title: "Pending Customers",
+            title: "Total Customers",
             value: data?.customers,
             color: "text-yellow-400",
           },

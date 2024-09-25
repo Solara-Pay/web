@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
+import { Link } from "react-router-dom";
 
 const FeatureCard = ({ icon, heading, para }) => (
   <div className="bg-gray-800 bg-opacity-50 backdrop-blur-lg shadow-xl rounded-2xl overflow-hidden flex flex-col h-full transform transition duration-300 hover:scale-105 group">
@@ -67,9 +68,12 @@ const LandingPage = () => {
               solution. Integrate cryptocurrency payments effortlessly and
               securely.
             </p>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-full shadow-lg transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 uppercase tracking-wider animate-fade-in-up animation-delay-400">
+            <Link to="/signin">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-full shadow-lg transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 uppercase tracking-wider animate-fade-in-up animation-delay-400"
+            >
               Get Started Now
             </button>
+            </Link>
           </div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-600 opacity-10"></div>

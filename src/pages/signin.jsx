@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Mail, Lock, Loader2, Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 const SigninForm = () => {
 
@@ -15,7 +16,7 @@ const SigninForm = () => {
     e.preventDefault(); // Prevent default form submission
 
     // Log user input (for testing)
-    console.log("Email:", email, "Password:", password);
+    console.log("Email:", email, "Password:", password, process.env.BACKENDURL);
 
     // Prepare user data for submission
     const userData = {
@@ -34,7 +35,6 @@ const SigninForm = () => {
         },
         body: JSON.stringify(userData), // Convert user data to JSON
       });
-
       if (!response.ok) {
         throw new Error("Network response was not ok"); // Handle error response
       }
@@ -48,12 +48,14 @@ const SigninForm = () => {
       // Optionally redirect or show a success message here
     } catch (error) {
       setLoading(false);
+      toast.error('Error' + error.message)
       console.error("Error:", error); // Handle fetch error
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-700 to-indigo-900 flex justify-center items-center p-4">
+        <ToastContainer/>
       <div className="bg-white rounded-lg shadow-2xl w-full max-w-md overflow-hidden">
         <div className="px-10 py-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">

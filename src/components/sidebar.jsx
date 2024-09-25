@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   ListCollapse,
@@ -9,11 +9,13 @@ import {
   User,
   Wallet,
   Code,
+  LogOut
 } from "lucide-react";
-
+import { ToastContainer, toast } from "react-toastify";
 const Sidebar = () => {
   const [navVisible, setNavVisible] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const toggleNav = () => {
     setNavVisible(!navVisible);
@@ -26,10 +28,34 @@ const Sidebar = () => {
     { href: "/transactions", icon: ArrowRightLeft, label: "Transactions" },
     { href: "/details", icon: ListCollapse, label: "Account Details" },
     { href: "/developer", icon: Code, label: "Developer Tools" },
+    // { href: "/signin", icon: LogOut, label: "Logout" },
   ];
 
+  const logout = async () => {
+        const accessToken = localStorage.getItem("accessToken");
+        try {
+          const response = await fetch("https://script.teendev.dev/solara/api/logout", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+            },
+          });
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const result = await response.json();
+          localStorage.removeItem("accessToken");
+          navigate('/signin')
+        } catch (error) {
+          toast.error("Error fetching user data: " + error.message);
+        } finally {
+          toast.error("Unable to Log out");
+        }
+  };
   return (
     <>
+    <ToastContainer/>
       <button
         onClick={toggleNav}
         className="md:hidden fixed top-10 right-4 z-50 p-2 rounded-full bg-gray-800 text-white hover:bg-gray-600 transition-colors duration-200"
@@ -64,6 +90,13 @@ const Sidebar = () => {
                   </Link>
                 </li>
               ))}
+                               <button
+                    onClick={logout}
+                    className={`flex items-center p-3 rounded-lg transition-colors duration-200 hover:bg-gray-700 text-white`}
+                  >
+                    <LogOut className="w-5 h-5 mr-3" />
+                    Logout
+                  </button>
             </ul>
           </nav>
         </div>
