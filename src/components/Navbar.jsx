@@ -47,6 +47,7 @@ const Navbar = () => {
     { name: "Features", id: "features" },
     { name: "Support", id: "support" },
     { name: "Join Waitlist", id: "waitlist" },
+    { name: "Sign In", id: "/signin" },
   ];
 
   return (

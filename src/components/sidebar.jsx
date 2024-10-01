@@ -9,7 +9,8 @@ import {
   User,
   Wallet,
   Code,
-  LogOut
+  LogOut,
+  GroupIcon
 } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
 const Sidebar = () => {
@@ -25,10 +26,10 @@ const Sidebar = () => {
     { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
     { href: "/account", icon: User, label: "Customers" },
     { href: "/wallet", icon: Wallet, label: "My Wallet" },
+    { href: "/payroll/groups", icon: GroupIcon, label: "Payroll" },
     { href: "/transactions", icon: ArrowRightLeft, label: "Transactions" },
     { href: "/details", icon: ListCollapse, label: "Account Details" },
     { href: "/developer", icon: Code, label: "Developer Tools" },
-    // { href: "/signin", icon: LogOut, label: "Logout" },
   ];
 
   const logout = async () => {

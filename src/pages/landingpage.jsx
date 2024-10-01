@@ -5,6 +5,9 @@ import {
   WalletMinimal,
   ChevronDown,
   Mail,
+  Globe,
+  Send,
+  BellIcon
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
@@ -40,13 +43,24 @@ const LandingPage = () => {
     {
       heading: "Real-Time Notifications",
       para: "Enhance user experience with immediate payment feedback, reducing manual checks and improving financial transparency.",
-      icon: <CreditCard className="w-12 h-12" />,
+      icon: <BellIcon className="w-12 h-12" />,
     },
     {
       heading: "Instant Wallet Generation",
       para: "Generate unique Solana wallet addresses instantly through a simple API call, eliminating complex wallet setups for your business.",
       icon: <WalletMinimal className="w-12 h-12" />,
     },
+    {
+        heading: "Instant Payroll Disbursement",
+        para: "Are you a business owner tired of processing payroll manually? Use our Payroll Solution to automatically disburse salaries to your employees instantly and on time. No more delays—powered by Solana.",
+        icon: <Send className="w-12 h-12" />,
+      },
+      {
+        heading: "Global Support",
+        para: "Our Payroll solution is not country-specific. You can now hire employees from around the world without worrying about how to pay them.",
+        icon: <Globe className="w-12 h-12" />,
+      },
+
   ];
 
   return (
@@ -60,13 +74,11 @@ const LandingPage = () => {
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight animate-fade-in-up">
-              Collect Solana Payments{" "}
+              Collect & Disburse Solana Payments{" "}
               <span className="text-blue-400">Effortlessly</span>
             </h1>
             <p className="text-xl text-gray-300 mb-10 animate-fade-in-up animation-delay-200">
-              Revolutionize your business with our seamless Solana payment
-              solution. Integrate cryptocurrency payments effortlessly and
-              securely.
+            Easily collect and disburse Solana payments with instant payroll disbursement. Automate scheduled payments  to recipients, ensuring timely payouts. Perfect for businesses and merchants, with seamless integration for Web2 and Web3 applications.
             </p>
             <Link to="/signin">
             <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-full shadow-lg transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 uppercase tracking-wider animate-fade-in-up animation-delay-400"
@@ -85,7 +97,7 @@ const LandingPage = () => {
       <section className="py-20 bg-gray-800 bg-opacity-50">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-12 text-blue-300">
-            Trusted by Industry Leaders
+            Core Depenencies
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-12">
             {["solana", "solflare", "radar"].map((brand, index) => (
@@ -146,7 +158,7 @@ const LandingPage = () => {
               Join Our Waitlist
             </h2>
             <p className="text-xl text-gray-300 mb-10 animate-fade-in-up animation-delay-200">
-              Be among the first to experience the future of Solana payments.
+              Be among the first to experience the future of payments on Solana
               Sign up now for exclusive early access and updates.
             </p>
             <form className="flex flex-col sm:flex-row items-center justify-center gap-4">

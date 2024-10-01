@@ -55,9 +55,7 @@ const Details = () => {
     email: userData?.email || '',
     username: userData?.username || '',
     country: userData?.country || '',
-    wallet_address_balance: typeof userData?.wallet_address_balance === 'object'
-    ? 0
-    : userData?.wallet_address_balance || 0, // Default to 0 if undefined
+    wallet_address_balance: userData?.wallet_address_balance || 0, // Default to 0 if undefined
     wallet_address: userData?.wallet_address || '',
     onsite_wallet_balance: userData?.onsite_wallet_balance || 0,
     onsite_wallet_address: userData?.onsite_wallet_address || '',

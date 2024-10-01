@@ -18,6 +18,9 @@ import Layout from './components/layout';
 import Account from './pages/account';
 import Wallet from './pages/wallet';
 import Developer from './pages/developer';
+import PayrollGroups from './pages/payrollgroups';
+import Payrollrecipient from './pages/payrollrecipient';
+import ProtectedRoute from './middleware/protectedroute';
 
 function App() {
   const router = createBrowserRouter(
@@ -26,16 +29,20 @@ function App() {
         <Route path='/' element={<LandingPage />} />
         <Route path='/signin' element={<LoginForm />} />
         <Route path='/signup' element={<SignupForm />} />
-        
+
         <Route element={<Layout />}>
+        <Route element={<ProtectedRoute/>}>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/details' element={<Details />} />
           <Route path='/developer' element={<Developer />} />
           <Route path='/account' element={<Account />} />
           <Route path='/wallet' element={<Wallet />} />
           <Route path='/transactions' element={<Transactions />} />
+          <Route path='/payroll/groups' element={<PayrollGroups/>} />
+          <Route path='/payroll/:id/recipients' element={<Payrollrecipient/>} />
+          </Route>
         </Route>
-        
+
         <Route path="*" element={<NotFound />} />
       </>
     )
