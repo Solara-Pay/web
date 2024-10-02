@@ -7,7 +7,7 @@ import {
   Mail,
   Globe,
   Send,
-  BellIcon
+  BellIcon,
 } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
@@ -51,16 +51,15 @@ const LandingPage = () => {
       icon: <WalletMinimal className="w-12 h-12" />,
     },
     {
-        heading: "Instant Payroll Disbursement",
-        para: "Are you a business owner tired of processing payroll manually? Use our Payroll Solution to automatically disburse salaries to your employees instantly and on time. No more delays—powered by Solana.",
-        icon: <Send className="w-12 h-12" />,
-      },
-      {
-        heading: "Global Support",
-        para: "Our Payroll solution is not country-specific. You can now hire employees from around the world without worrying about how to pay them.",
-        icon: <Globe className="w-12 h-12" />,
-      },
-
+      heading: "Instant Payroll Disbursement",
+      para: "Are you a business owner tired of processing payroll manually? Use our Payroll Solution to automatically disburse salaries to your employees instantly and on time. No more delays—powered by Solana.",
+      icon: <Send className="w-12 h-12" />,
+    },
+    {
+      heading: "Global Support",
+      para: "Our Payroll solution is not country-specific. You can now hire employees from around the world without worrying about how to pay them.",
+      icon: <Globe className="w-12 h-12" />,
+    },
   ];
 
   return (
@@ -69,7 +68,10 @@ const LandingPage = () => {
 
       <section
         id="hero"
-        className="hero h-screen flex items-center justify-center relative overflow-hidden"
+        className="hero h-screen flex items-center justify-center relative overflow-hidden bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('/assets/images/bg.jpg')",
+        }}
       >
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
@@ -78,17 +80,19 @@ const LandingPage = () => {
               <span className="text-blue-400">Effortlessly</span>
             </h1>
             <p className="text-xl text-gray-300 mb-10 animate-fade-in-up animation-delay-200">
-            Easily collect and disburse Solana payments with instant payroll disbursement. Automate scheduled payments  to recipients, ensuring timely payouts. Perfect for businesses and merchants, with seamless integration for Web2 and Web3 applications.
+              Easily collect and disburse Solana payments with instant payroll
+              disbursement. Automate scheduled payments to recipients, ensuring
+              timely payouts. Perfect for businesses and merchants, with
+              seamless integration for Web2 and Web3 applications.
             </p>
             <Link to="/signin">
-            <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-full shadow-lg transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 uppercase tracking-wider animate-fade-in-up animation-delay-400"
-            >
-              Get Started Now
-            </button>
+              <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-full shadow-lg transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 uppercase tracking-wider animate-fade-in-up animation-delay-400">
+                Get Started Now
+              </button>
             </Link>
           </div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-600 opacity-10"></div>
+        {/* <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-indigo-600 opacity-50"></div> */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
           <ChevronDown className="w-8 h-8 text-blue-400" />
         </div>
