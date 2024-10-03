@@ -24,7 +24,7 @@ const Sidebar = () => {
 
   const navItems = [
     { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-    { href: "/account", icon: User, label: "Customers" },
+    // { href: "/account", icon: User, label: "Customers" },
     { href: "/wallet", icon: Wallet, label: "My Wallet" },
     { href: "/payroll/groups", icon: GroupIcon, label: "Payroll" },
     { href: "/transactions", icon: ArrowRightLeft, label: "Transactions" },
