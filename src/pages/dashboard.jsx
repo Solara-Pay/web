@@ -81,17 +81,17 @@ const Dashboard = () => {
       {/* Statistics cards for displaying key metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
         {[
-          { title: "Total Revenue", value: data?.transactionsum + 'SOL', color: "text-green-400" },
+          { title: "Transactions Sum", value: data?.transactionsum + 'SOL', color: "text-green-400" },
           {
             title: "Total Transactions",
             value: data?.transactioncount,
             color: "text-blue-400",
           },
-          {
-            title: "Total Customers",
-            value: data?.customers,
-            color: "text-yellow-400",
-          },
+        //   {
+        //     title: "Total Customers",
+        //     value: data?.customers,
+        //     color: "text-yellow-400",
+        //   },
           {
             title: "Total Payroll",
             value: data?.payrollgroup,
