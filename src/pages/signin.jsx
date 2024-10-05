@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 
 const SigninForm = () => {
-
+  const accessToken = localStorage.getItem("accessToken");
   // State variables to hold user input
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");

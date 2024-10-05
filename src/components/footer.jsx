@@ -18,7 +18,7 @@ const Footer = () => {
           <div className="space-y-8">
             <h1 className="text-4xl font-bold tracking-tight">SOLARA PAY</h1>
             <p className="text-gray-300 text-base">
-            Helping companies pay salaries instantly and on time, while enabling merchants to easily collect Solana payments with seamless integration for both Web2 and Web3 platforms.
+            Helping companies pay salaries instantly, on time and enhancing their workflow
             </p>
             <div className="flex space-x-6">
               {[Twitter].map((Icon, index) => (

@@ -3,15 +3,15 @@ import { User, Mail, AtSign, MapPin, Wallet, Key, Link } from "lucide-react"; //
 
 const UserDetailsPage = ({ user }) => {
   // Component to display individual user detail items
-  const DetailItem = ({ label, value, icon: Icon, additionalClass }) => (
-    <div className="bg-gray-700 rounded-lg shadow-md p-4 flex items-center space-x-4 hover:bg-gray-750 transition-colors duration-200 w-18">
+  const DetailItem = ({ label, value, icon: Icon, adiditionalClass }) => (
+    <div className="bg-gray-700 rounded-lg shadow-md p-7 flex items-center space-x-4 hover:bg-gray-750 transition-colors duration-200 w-18">
       <div className="bg-indigo-900 p-3 rounded-full">
         <Icon className="text-indigo-300 w-6 h-6" /> {/* Rendering the icon */}
       </div>
       <div>
         <dt className="text-sm font-medium text-gray-400">{label}</dt>{" "}
         {/* Label for the detail */}
-        <dd className="mt-1 text-lg font-medium text-white">{value}</dd>{" "}
+        <dd className="mt-1 text-lg w-14 font-medium  text-white">{value}</dd>{" "}
         {/* Value for the detail */}
       </div>
     </div>

@@ -12,6 +12,8 @@ import {
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import { Link } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { useState } from "react";
 
 const FeatureCard = ({ icon, heading, para }) => (
   <div className="bg-gray-800 bg-opacity-50 backdrop-blur-lg shadow-xl rounded-2xl overflow-hidden flex flex-col h-full transform transition duration-300 hover:scale-105 group">
@@ -36,34 +38,28 @@ const FeatureCard = ({ icon, heading, para }) => (
 const LandingPage = () => {
   const features = [
     {
-      heading: "Seamless Crypto Payments",
-      para: "Simplify cryptocurrency for your business with our straightforward solution: a reserved Solana wallet address easily integrated into your product.",
-      icon: <ArrowLeftRight className="w-12 h-12" />,
-    },
-    {
-      heading: "Real-Time Notifications",
-      para: "Enhance user experience with immediate payment feedback, reducing manual checks and improving financial transparency.",
-      icon: <BellIcon className="w-12 h-12" />,
-    },
-    {
-      heading: "Instant Wallet Generation",
-      para: "Generate unique Solana wallet addresses instantly through a simple API call, eliminating complex wallet setups for your business.",
-      icon: <WalletMinimal className="w-12 h-12" />,
-    },
-    {
       heading: "Instant Payroll Disbursement",
-      para: "Are you a business owner tired of processing payroll manually? Use our Payroll Solution to automatically disburse salaries to your employees instantly and on time. No more delays—powered by Solana.",
+      para: "Automate salary payments to employees, ensuring instant and timely payouts via Solana’s blockchain.",
       icon: <Send className="w-12 h-12" />,
     },
     {
-      heading: "Global Support",
-      para: "Our Payroll solution is not country-specific. You can now hire employees from around the world without worrying about how to pay them.",
+      heading: "Cross-Border Payments",
+      para: "No geographic restrictions—pay employees globally with ease.",
       icon: <Globe className="w-12 h-12" />,
     },
+    {
+      heading: "Automated Scheduling:",
+      para: "Set up daily, weekly, or monthly disbursement schedules, and let the system handle payments automatically",
+      icon: <WalletMinimal className="w-12 h-12" />,
+    },
   ];
-
+ function addWaitlist()  {
+    toast.success("Successfully added to Waitlist")
+ }
+  const [email, setEmail] = useState('')
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+        <ToastContainer/>
       <Navbar />
 
       <section
@@ -76,14 +72,11 @@ const LandingPage = () => {
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight animate-fade-in-up">
-              Collect & Disburse Solana Payments{" "}
-              <span className="text-blue-400">Effortlessly</span>
+            Effortless Payroll Disbursement Powered by{" "}
+              <span className="text-blue-400">Solana</span>
             </h1>
             <p className="text-xl text-gray-300 mb-10 animate-fade-in-up animation-delay-200">
-              Easily collect and disburse Solana payments with instant payroll
-              disbursement. Automate scheduled payments to recipients, ensuring
-              timely payouts. Perfect for businesses and merchants, with
-              seamless integration for Web2 and Web3 applications.
+            Automate and streamline payroll disbursement using Solana. Schedule timely, instant payments to staff around the world with zero delays. Perfect for businesses looking for a cost-effective, cross-border solution and with a large workforce
             </p>
             <Link to="/signin">
               <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded-full shadow-lg transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 uppercase tracking-wider animate-fade-in-up animation-delay-400">
@@ -162,14 +155,15 @@ const LandingPage = () => {
               Join Our Waitlist
             </h2>
             <p className="text-xl text-gray-300 mb-10 animate-fade-in-up animation-delay-200">
-              Be among the first to experience the future of payments on Solana
-              Sign up now for exclusive early access and updates.
+            Be the first to experience seamless payroll automation! Join our exclusive waitlist and get early access to Solara Pay
             </p>
-            <form className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <form className="flex flex-col sm:flex-row items-center justify-center gap-4" action={addWaitlist}>
               <input
                 type="email"
                 placeholder="Enter your email address"
                 className="w-full sm:w-96 p-4 rounded-full bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <button
                 type="submit"

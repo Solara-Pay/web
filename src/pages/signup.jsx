@@ -71,7 +71,8 @@ const SignupForm = () => {
   };
 
   if(token){
-    navigate('/signin')
+    toast.error("Kindly logout before creating a New Account")
+    navigate('/dashboard')
 }
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-700 to-indigo-900 flex justify-center items-center p-4">
