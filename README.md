@@ -1,36 +1,46 @@
 # Solara Pay
 
-![Solara Pay](https://your-image-link-here.com) <!-- Add your project image URL here -->
+![Solara Pay](https://pbs.twimg.com/profile_images/1842198737097048064/z-70200B_400x400.jpg)
 
 ## Introduction
 
-**Solara Pay** is a comprehensive platform built to manage user payments, payroll disbursements, and financial control via Solana's blockchain technology. The system allows seamless handling of payroll automation for business owners and provides merchants with effortless ways to collect payments from customers using Solana.
-
-This platform supports both Web2 and Web3 integrations, offering instant transactions, real-time monitoring, and notifications for every payment.
+**Solara Pay** is an advanced payroll automation platform leveraging Solana blockchain technology to streamline global salary disbursements. It simplifies payroll management for businesses, allowing them to pay employees on time, anywhere in the world, with just a few clicks. Our system is designed for providing fast, secure, and cost-effective transactions.
+We are currently live on Solana Devnet
 
 ## Key Features
 
-- **Instant Payroll Disbursement**: Automatically disburse employee salaries based on a scheduled frequency (daily, weekly, monthly, yearly). This feature removes delays and ensures on-time payments.
+- **Automated Payroll Disbursement**: Effortlessly set up scheduled payrolls that automatically disburse salaries on time (daily, weekly, monthly, yearly).
 
-- **Global Support**: Pay employees globally without geographical restrictions, allowing you to hire talent from anywhere in the world.
+- **Global Payments**: No geographical limitations—pay employees across borders instantly using Solana's blockchain.
 
-- **Hands-Free Merchant Payments**: Merchants can accept payments instantly with a simple SOL transfer. Payments are processed without leaving the platform.
+- **Effortless Management**: Manage payroll groups, create recipients, and schedule payments with a simple and intuitive UI.
 
-- **Real-Time Payment Monitoring**: Track all transactions in real-time, with instant payment notifications (IPN) sent to your backend as soon as the payment is confirmed.
+<!-- - **Real-Time Payment Tracking**: Monitor all disbursements in real time with instant payment notifications (IPN). -->
+
+- **Solana Integration**: Enjoy lightning-fast transactions with minimal fees using Solana’s blockchain.
 
 ## Technologies Used
 
-- **Frontend**: React.js with TailwindCSS
-- **Backend**: Laravel & Next.js
-- **Blockchain**: Solana for fast, secure, and low-fee transactions
-- **Database**: MySQL for managing user data, payroll, and transaction history
+- **Frontend**: React.js & TailwindCSS for a modern and responsive interface.
+- **Backend**: Laravel & Next.js to handle payroll, scheduling, and user management.
+- **Blockchain**: Solana for fast and secure transaction processing.
+- **Database**: MySQL to store registered users, payroll data and transaction history.
 
-## Installation
+## Getting Started
 
-1. **Clone the repository**:
+1. **Clone the Web Interface**:
 
    ```bash
-   git clone https://github.com/solara-pay/web.git
-   cd your-repo-name
+   git clone https://github.com/Solara-Pay/web.git
+   cd solara-pay-web
    npm install
-   npm run start
+   npm start
+
+## Important Repositories
+For Solara Pay to function properly, the following Repositories are important, we recommend checking out the following repositories:
+
+1. **[Solara Pay API & Scheduling System](https://github.com/Solara-Pay/api-backend)**
+ This repository houses the core API and Payroll Scheduling System of **Solara Pay**
+
+2. **[Solara Pay Next Backend](https://github.com/Solara-Pay/next-backend)**
+   This handles wallet generation and transaction processing using the Solana blockchain, enabling secure and fast payments.
