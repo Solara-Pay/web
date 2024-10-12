@@ -12,7 +12,7 @@ const Developers = () => {
     const accessToken = localStorage.getItem("accessToken");
     try {
       setLoading(true);
-      const response = await fetch("https://script.teendev.dev/solara/api/details", {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/details`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -82,7 +82,7 @@ const TabButton = ({ active, onClick, children }) => (
 const apikeyNew = async () => {
   const accessToken = localStorage.getItem("accessToken");
   try {
-    const response = await fetch("https://script.teendev.dev/solara/api/regenerate/api-key", {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/regenerate/api-key`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -123,7 +123,7 @@ const Webhooks = ({ webhook, setWebhook }) => {
     const accessToken = localStorage.getItem("accessToken");
     try {
       setLoading(true);
-      const response = await fetch("https://script.teendev.dev/solara/api/update-profile", {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/update-profile`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken}`,

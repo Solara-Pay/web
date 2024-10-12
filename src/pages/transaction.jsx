@@ -102,7 +102,7 @@ export default function EnhancedTransactionsTable() {
       }
 
       const response = await fetch(
-        "https://script.teendev.dev/solara/api/transactions",
+        `${process.env.REACT_APP_BACKEND_URL}/api/transactions`,
         {
           method: "GET",
           headers: {

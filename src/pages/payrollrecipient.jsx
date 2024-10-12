@@ -119,7 +119,7 @@ export default function EnhancedTransactionsTable() {
         throw new Error("No access token found");
       }
       const response = await fetch(
-        `https://script.teendev.dev/solara/api/payroll/query/group?id=${id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/payroll/query/group?id=${id}`,
         {
           method: "GET",
           headers: {

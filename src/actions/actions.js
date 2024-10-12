@@ -5,7 +5,7 @@ export const deleteGroup = async (id) => {
             id : id,
           };
         const response = await fetch(
-          "https://script.teendev.dev/solara/api/payroll/destroy/group",
+          `${process.env.REACT_APP_BACKEND_URL}/api/payroll/destroy/group`,
           {
             method: "POST",
             headers: {
@@ -36,7 +36,7 @@ export const deleteGroup = async (id) => {
             id : id,
           };
         const response = await fetch(
-          "https://script.teendev.dev/solara/api/payroll/update/group",
+          `${process.env.REACT_APP_BACKEND_URL}/api/payroll/update/group`,
           {
             method: "POST",
             headers: {
@@ -67,7 +67,7 @@ export const deleteGroup = async (id) => {
             name : name.name,
           };
         const response = await fetch(
-          "https://script.teendev.dev/solara/api/payroll/create/group",
+          `${process.env.REACT_APP_BACKEND_URL}/api/payroll/create/group`,
           {
             method: "POST",
             headers: {
@@ -102,7 +102,7 @@ export const deleteGroup = async (id) => {
             payroll_group_id : id
           };
         const response = await fetch(
-          "https://script.teendev.dev/solara/api/payroll/create/recipient",
+          `${process.env.REACT_APP_BACKEND_URL}/api/payroll/create/recipient`,
           {
             method: "POST",
             headers: {
@@ -133,7 +133,7 @@ export const deleteGroup = async (id) => {
             id : id,
           };
         const response = await fetch(
-          "https://script.teendev.dev/solara/api/payroll/destroy/recipient",
+          `${process.env.REACT_APP_BACKEND_URL}/api/payroll/destroy/recipient`,
           {
             method: "POST",
             headers: {

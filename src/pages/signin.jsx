@@ -27,7 +27,8 @@ const SigninForm = () => {
     try {
       // Fetch request to submit user data to the backend
       setLoading(true);
-      const response = await fetch('https://script.teendev.dev/solara/api/login', {
+      const url = process.env.REACT_APP_BACKEND_URL;
+      const response = await fetch(`${url}/api/login`, {
         // Replace with actual endpoint
         method: "POST", // HTTP method
         headers: {

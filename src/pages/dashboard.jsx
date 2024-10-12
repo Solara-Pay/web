@@ -27,7 +27,7 @@ const Dashboard = () => {
       try {
         setLoading(true);
         const response = await fetch(
-          "https://script.teendev.dev/solara/api/details",
+          `${process.env.REACT_APP_BACKEND_URL}/api/details`,
           {
             method: "GET", // GET request
             headers: {

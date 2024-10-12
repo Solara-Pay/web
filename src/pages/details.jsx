@@ -15,7 +15,7 @@ const Details = () => {
         const accessToken = localStorage.getItem("accessToken"); // Get token from localStorage
       try {
         setLoading(true);
-        const response = await fetch("https://script.teendev.dev/solara/api/details", {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/details`, {
             method: "GET", // GET request
             headers: {
               Authorization: `Bearer ${accessToken}`, // Add Bearer token to headers

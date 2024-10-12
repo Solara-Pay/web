@@ -15,7 +15,7 @@ const Wallet = () => {
         }
 
         const response = await fetch(
-          "https://script.teendev.dev/solara/api/wallet",
+          `${process.env.REACT_APP_BACKEND_URL}/api/wallet`,
           {
             method: "GET", // GET request
             headers: {

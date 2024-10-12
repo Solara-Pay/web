@@ -115,7 +115,7 @@ export default function EnhancedTransactionsTable() {
       }
 
       const response = await fetch(
-        "https://script.teendev.dev/solara/api/payroll/groups",
+        `${process.env.REACT_APP_BACKEND_URL}/api/payroll/groups`,
         {
           method: "GET",
           headers: {

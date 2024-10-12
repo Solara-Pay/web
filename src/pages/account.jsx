@@ -94,7 +94,7 @@ const Account = () => {
       }
 
       const response = await fetch(
-        "https://script.teendev.dev/solara/api/accounts/all",
+        `${process.env.REACT_APP_BACKEND_URL}/api/accounts/all`,
         {
           method: "GET",
           headers: {
